@@ -1,0 +1,579 @@
+SQL Stands for Structured Query Langauge.
+
+SQL is a langauge which is used to interact with the Relational DBMS.
+It is a software application which is used to create and manage various DBs.
+
+Software used:  MYSQL
+Editor used:    PopSQL
+
+MYSQL is the most popular RDBMS. 
+
+-->What is a Database???
+    Any Collection of Related Information. Eg. Phone Book, Shopping List, Todo List.
+
+    Database can be stored in different ways. Eg. On Paper, In your Mind, On a Computer.
+
+    Databases are useful in handling a large amount of Information.
+
+    -> Database Management System (DBMS)
+        A special software program that helps users create and maintain a databse. 
+            -Makes it easy to manage large amounts of Information
+            -Handles Security
+            -Backups
+            -Importing/Exporting Database
+            -Concurrency
+            -Interacts with Software Applications
+
+    -> CRUD
+        CRUD stands for Create Read Update Delete.
+
+        The complete Database runs on this. These are the four core opeations we want a DBMS to work on.
+
+    ->Types of Databases   
+
+        >Relational Database(SQL)
+            Organize data into one or more table.
+            Each table has columns and rows.
+            A unique key identifies each row.
+            Eg: mySQL, Oracle, postgreSQL, mariaDB, etc.
+
+        >Non-Relational Database(noSQL/ not just SQL)
+            Organize data is anything but a traditional table.
+                -Key-Value Stores
+                -Documents (JSON,XML,etc)
+                -Graphs
+                -Flexible Tables
+            Eg: mongoDB, dynamoDB, apache cassandra, firebase,etc.
+
+    ->SQL
+        -Standardized language for interacting with RDBMS
+        -Used to persom CURD operations, as well as other administrative tasks.
+        -Used to define tables and structures.
+        -SQL code used on one RDBMS is not always portable to another without modification.
+
+    ->Database Queries
+        Quesires are request made to the DBMS for specific information.
+
+        As the database's structure become more and more complex, it becomes more difficult to get the specific pieces of information we want.
+
+        Eg: A google search is a query. 
+
+--> Tables and Keys
+
+    Every Table Consist of Rows and Columns.
+
+    A Column represents the type and group name of the data. 
+    The Row represents the data present. 
+
+    In Every Table, we have a Column which is unique and has every row-value unique. This Columnd is known as the Primary key.
+    Primary Key is an attribute which uniquely defines every value in the column
+
+    Foreign Key:    A Foreign Key is an attribute which can be stored in our Database Table and can link us with another Database Table.
+
+--> SQL Basics
+    SQL is actually a hybrid language, it's basically 4 types of langauges in one:
+        >Data Query Langauge (DQL)
+            -Used to query the database for information.
+            -Get information that is already stored there.
+        
+        >Data Defination Language (DDL)
+            -Used for Defining Database Schemas.
+        
+        >Data Control Langauge (DCL)
+            -Used for controlling access to the data in the database.
+            -User and Permission management.
+        
+        >Data Manipulation Langauge (DML)
+            -Used for inserting, updating and deleting data from the database.
+
+    -> Queries
+        A query is a set of instructions given to the RDBMS that tell the RDBMS what information you want it to retreive for you.
+
+
+Download the MYSQL from __________________
+
+Install it and once Done, open Start Menu and run MYSQL Command Line Client
+
+Login using the Password you set.
+
+    ->Creating a Database
+            Command:    create database databaseName;
+
+            databaseName: LearnDB   (This is the DBname which I used)
+
+Download the PopSQL Editor from ________________
+
+--> Creating Tables 
+
+    -> Creating Tables
+        
+            Command:    create table tableName(
+                attributeName   dataType,
+                .....
+            );
+
+        >Data Types Available
+            -INT            Whole Numbers
+            -DECIMAL(M,N)   Decimal Numbers
+            -VARCHAR(l)     String of length l
+            -BOLB           Binary Large Object, Stores Large Data
+            -DATE           'YYYY-MM-DD'
+            -TIMESTAMP      'YYYY-MM-DD HH:MM:SS'
+
+            Command:    CREATE TABLE student(
+               student_id   INT         PRIMARY KEY,
+               name         VARCHAR(20),
+               major        VARCHAR(20)
+            );
+
+            To get the details of the Table Created, use command:   DESCRIBE tableName;
+
+            In our DB, we use the following command:    DESCRIBE student;
+
+    -> Delete a Table
+
+            To Delete a Table, type the command:    DROP TABLE tableName;
+
+            In our DB, we use the following command: DROP TABLE student;
+
+    -> Adding a New Column to the Table
+
+            To Add a New Column, type the command: ALTER TABLE tableName ADD attributeName dataType;
+
+            In our DB, we use the following command: ALTER TABLE student ADD gpa DECIMAL(3,2);
+
+    -> Droping a Particular Column in a Table
+
+            To Delete a Column, type the command: ALTER TABLE tableName DROP attributeName;
+
+            In our DB, we use the following command: ALTER TABLE student DROP gpa; 
+
+--> Inserting Data
+
+    To Insert Data in the Table use the following command:
+
+            INSERT INTO tableName VALUES(VALUE_1,VALUE_2,...);
+
+    Commands in our DB are as follows:
+
+            INSERT INTO student VALUES(1, 'Jack', 'Biology');
+            INSERT INTO student VALUES(2, 'Kate', 'Sociology');
+
+    
+    To view the table, use the command:     SELECT * FROM tableName;
+
+    In our DB, we use the command:     SELECT * FROM student;
+
+    To add a student whose Major value we do not have. For that we use the following Command:
+
+            INSERT INTO student(student_id, name) VALUES(3, 'Claire');
+
+    Remaining Commands:
+
+            INSERT INTO student VALUES(4, 'Jack', 'Biology');
+            INSERT INTO student VALUES(5, 'Mike', 'Computer Science');
+
+-->Constraints
+
+    Constraints are use while creating a table in order to define some rules while Inserting data into the table.
+
+    Note:   Drop the Previous Table Student. Here we will create it again with some Constraints.
+
+    Our new command with some Constraints added is:
+        CREATE TABLE student(
+               student_id   INT         PRIMARY KEY,
+               name         VARCHAR(20) NOT NULL,
+               major        VARCHAR(20) UNIQUE
+            );
+
+    Insert the Data using the following commands:
+
+            INSERT INTO student VALUES(1, 'Jack', 'Biology');
+            INSERT INTO student VALUES(2, 'Kate', 'Sociology');
+            INSERT INTO student VALUES(3, NULL, 'Chemistry');               //Here we will get an error as name cannot be Null.
+            INSERT INTO student VALUES(4, 'Jack', 'Biology');               //Here we will get an error as Major should be unique for everyone.
+            INSERT INTO student VALUES(5, 'Mike', 'Computer Science');
+
+    -> We Want to add some Default Value to a Particular Attribute
+
+        Note:  Drop the Previous Table.
+
+        Command to create such a Table:
+            CREATE TABLE student(
+               student_id   INT         PRIMARY KEY,
+               name         VARCHAR(20),
+               major        VARCHAR(20) DEFAULT 'undecided'
+            );
+
+    -> To Automatically Increment the Index No. 
+
+        Note: Drop the Previous Table.
+
+        Command to create such a Table:
+            CREATE TABLE student(
+               student_id   INT          AUTO_INCREMENT,
+               name         VARCHAR(20),
+               major        VARCHAR(20),
+               PRIMARY KEY(student_id)
+            );
+
+        In this table Insert only the name and major.
+
+        INSERT INTO student(name, major) VALUES('Jack','Biology');
+        INSERT INTO student(name, major) VALUES('Kate','Sociology');
+
+--> Update and Delete Rows in a DB Table
+
+    Insert the Following Data in the Table Created Previously.
+
+        INSERT INTO student(name, major) VALUES('Jack','Biology');
+        INSERT INTO student(name, major) VALUES('Kate','Sociology');
+        INSERT INTO student(name, major) VALUES('Claire','Chemistry');
+        INSERT INTO student(name, major) VALUES('Jack','Biology');
+        INSERT INTO student(name, major) VALUES('Mike','Computer Science');
+
+    >Change the name of a Major
+
+        UPDATE student SET major = 'Bio' WHERE major = 'Biology';
+        UPDATE student SET major = 'Comp Sci' WHERE major = 'Computer Science';
+        UPDATE student SET major = 'Comp Sci' WHERE student_id = 4;
+        UPDATE student SET major = 'Biochemistry' WHERE major = 'Bio' OR major = 'Chemistry';
+        UPDATE student SET name = 'Tom', major = 'undecided' WHERE student_id = 1;
+        UPDATE student SET major = 'undecided;
+
+    >Delete a Row or Group of Row
+
+        DELETE FROM student WHERE student_id = 5;
+        DELETE FROM student WHERE name = 'Tom' AND major = 'undecided';
+        DELETE FROM student;
+
+--> Basic Queries
+
+        SELECT * FROM students  :   SELECT tell us that we need to get some information. 
+                                    * means that all of the information. Can be replaced with Column Name.
+                                    FROM tell us from which Table Information needs to be get.
+
+        ORDER BY X              :   Here X could be ASC (Ascending), DESC (Descending) or some Column name as well. This Sorts the Table in a particular way.
+
+        LIMIT X                 :   Limits the Result by a Value X.
+
+        WHERE                   :   This Keyword is used to Filter the Result. 
+
+                You can use AND, OR, <,>,<=,=>,<> with WHERE as Filter.
+
+--> Company Database Intro
+
+        A Company Database is a collection of many Tables which are related to each other using keys. 
+
+        A Company DB follows a Schema. 
+
+        A Schema is nothing, but a defination of how Tables are linked to each other. Which attribute is the Primary key and which is the Foreign Key(s).
+
+--> Creating a Company Database.
+
+        Note: Drop previous table(s)
+
+        -> Creating employee table
+
+                CREATE TABLE employee (
+                    emp_id      INT         PRIMARY KEY,
+                    first_name  VARCHAR(40),
+                    last_name   VARCHAR(40),
+                    birth_day   DATE,
+                    sex         VARCHAR(1),
+                    salary      INT,
+                    super_id    INT,
+                    branch_id   INT
+                );
+
+        -> Creating branch table
+
+                CREATE TABLE branch (
+                    branch_id       INT         PRIMARY KEY,
+                    branch_name     VARCHAR(40),
+                    mgr_id          INT,
+                    mrg_start_date  DATE,
+                    FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL
+                );
+
+        -> Adding Foreign Key to employee
+
+                ALTER TABLE employee ADD FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE SET NULL;
+
+                ALTER TABLE employee ADD FOREIGN KEY(super_id) REFERENCES employee(emp_id) ON DELETE SET NULL;
+        
+        -> Creating client table
+
+                CREATE TABLE client (
+                    client_id       INT         PRIMARY KEY,
+                    client_name     VARCHAR(40),
+                    branch_id       INT,
+                    FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE SET NULL
+                );
+
+        -> Creating works_with table
+
+                CREATE TABLE works_with (
+                    emp_id          INT,
+                    client_id       INT,
+                    total_sales     INT,
+                    PRIMARY KEY(emp_id, client_id),
+                    FOREIGN KEY(emp_id) REFERENCES employee(emp_id) ON DELETE CASCADE,
+                    FOREIGN KEY(client_id) REFERENCES client(client_id) ON DELETE CASCADE
+                );
+
+        -> Creating branch_supplier table
+
+                CREATE TABLE branch_supplier (
+                    branch_id           INT,
+                    supplier_name       VARCHAR(40),
+                    supply_type         VARCHAR(40),
+                    PRIMARY KEY(branch_id,supplier_name),
+                    FOREIGN KEY(branch_id) REFERENCES branch(branch_id) ON DELETE CASCADE
+                );
+
+        -> Populating the Tables
+
+                --Corporate
+
+                INSERT INTO employee VALUES(100,'David','Wallace','1967-11-17','M',250000,NULL,NULL);
+
+                INSERT INTO branch VALUES(1,'Corporate',100,'2006-02-09');
+
+                UPDATE employee SET branch_id = 1 WHERE emp_id = 100;
+
+                INSERT INTO employee VALUES(101, 'Jan','Levinson', '1961-05-11', 'F', 110000, 100, 1);
+
+                --Scranton
+
+                INSERT INTO employee VALUES(102, 'Michael','Scott','1964-03-15', 'M', 75000,NULL,NULL);
+
+                INSERT INTO branch VALUES(2,'Scranton',102,'1992-04-06');
+
+                UPDATE employee SET branch_id = 2 WHERE emp_id = 102;
+
+                INSERT INTO employee VALUES(103, 'Angela','Martin', '1971-06-25', 'F', 63000, 102, 2);
+                INSERT INTO employee VALUES(104, 'Kelly','Kapoor', '1980-02-05', 'F', 55000, 102, 2);
+                INSERT INTO employee VALUES(105, 'Stanley','Hudson', '1958-02-19', 'M', 66000, 102, 2);
+
+                --Standford
+
+                INSERT INTO employee VALUES(106, 'Josh','Porter','1969-09-05', 'M', 78000,NULL,NULL);
+
+                INSERT INTO branch VALUES(3,'Standford',106,'1998-02-13');
+
+                UPDATE employee SET branch_id = 3 WHERE emp_id = 106;
+
+                INSERT INTO employee VALUES(107, 'Andy','Bernard', '1973-07-22', 'M', 66000, 106, 3);
+                INSERT INTO employee VALUES(108, 'Jim','Halpert', '1978-10-01', 'M', 71000, 106, 3);
+
+                --Branch Supplier
+
+                INSERT INTO branch_supplier VALUES(2,'Hammer Mill','Paper');
+                INSERT INTO branch_supplier VALUES(2,'Uni-ball','Writing Utensils');
+                INSERT INTO branch_supplier VALUES(3,'Patriot Paper','Paper');
+                INSERT INTO branch_supplier VALUES(2,'J.T. Forms & Labels','Custom Fonts');
+                INSERT INTO branch_supplier VALUES(3,'Uni-ball','Writing Utensils');
+                INSERT INTO branch_supplier VALUES(3,'Hammer Mill','Paper');
+                INSERT INTO branch_supplier VALUES(3,'standford Labels','Custom Fonts');
+
+                --Client
+
+                INSERT INTO client VALUES(400,'Dunmore Highschool',2);
+                INSERT INTO client VALUES(401,'Lackawana Country',2);
+                INSERT INTO client VALUES(402,'FedEx',3);
+                INSERT INTO client VALUES(403,'John Daly Law, LLC',3);
+                INSERT INTO client VALUES(404,'Scranton Whitepages',2);
+                INSERT INTO client VALUES(405,'Times Newspaper',3);
+                INSERT INTO client VALUES(406,'FexEx',2);
+
+                --Works With
+
+                INSERT INTO works_with VALUES(105,400,55000);
+                INSERT INTO works_with VALUES(102,401,267000);
+                INSERT INTO works_with VALUES(108,402,22500);
+                INSERT INTO works_with VALUES(107,403,5000);
+                INSERT INTO works_with VALUES(108,403,12000);
+                INSERT INTO works_with VALUES(105,404,33000);
+                INSERT INTO works_with VALUES(107,405,26000);
+                INSERT INTO works_with VALUES(102,406,15000);
+                INSERT INTO works_with VALUES(105,406,130000);
+
+--> More Basic Queries
+
+                -> Find all Employees and Clients
+
+                    SELECT * FROM employee;
+                    SELECT * FROM client;
+
+                -> Find all Employees ordered by salary
+
+                    SELECT * FROM employee ORDER BY salary;
+
+                    For Descending Order:
+
+                        SELECT * FROM employee ORDER BY salary DESC;
+
+                -> Find all employee Ordered by sex then name
+
+                    SELCT * FROM employee ORDER BY sex, name;
+
+                -> Find first 5 employee in the table
+
+                    SELECT * FROM employee LIMIT 5;
+
+                -> Find first and last name of all Employees
+
+                    SELECT first_name, last_name FROM employee;
+
+                -> Find the forename and surnames of all employee
+
+                    SELECT first_name AS forename, last_name AS surname FROM employee;
+
+                -> Find out all the different genders
+
+                    SELECT DISTINCT sex FROM employee;
+
+--> Functions
+
+        SQL Functions are some pre-defined functions which are used to perform tasks like MIN, MAX, Average, Count, Sum, etc.
+
+            -> Find the number of employees
+
+                SELECT COUNT(emp_id) FROM employee;
+
+            -> Find the number of female employees born after 1970
+
+                SELECT COUNT(emp_id) FROM employee WHERE sex = 'F' AND birth_day > '1970-01-01';               
+
+            -> Find average of all employee's salaries
+
+                SELECT AVG(salary) FROM employee;
+
+            -> Find the Sum of all employee's salaries
+
+                SELECT SUM(salary) FROM employee;
+
+            -> Find out how many males and females are there
+
+                SELECT COUNT(sex), sex FROM employee GROUP BY sex;
+
+            -> Find the total sales of each salesman
+
+                SELECT SUM(total_sales), emp_id FROM works_with GROUP BY emp_id;
+
+--> Wildcards
+
+        Wildcards are basically a way of defining different patterns that we want to specific piece of data to. 
+
+        -> Find any client's who are an LLC
+
+            SELECT * FROM client WHERE client_name LIKE '%LLC';
+
+        -> Find any branch suppliers who are in the label business
+
+            SELECT * FROM branch_supplier WHERE supplier_name LIKE '% Label%';
+
+        -> Find any employee born in October
+
+            SELECT * FROM employee WHERE birth_day LIKE '___-10%';
+
+        -> Find any client who are schools
+
+            SELECT * FROM client WHERE client_name LIKE '%school%';
+
+--> Union
+
+    Union is a special SQL operator which is used to find the results of multiple Select statements into one.
+
+        -> Find a list of employee and branch names
+
+            SELECT first_name FROM employee UNION SELECT branch_name FROM branch;
+
+        -> Find a list of all clients and branch suppliers name
+
+            SELECT client_name FROM client UNION SELECT supplier_name FROM branch_supplier;
+
+        -> Find a list of all money spent or earned by the company
+
+            SELECT salary FROM employee UNION SELECT total_sales FROM works_with;
+
+--> Joins
+
+    Join is basically used to combine rules from two or more tables based on a related column between them.
+
+        INSERT INTO branch VALUES(4, 'Buffalo', NULL, NULL);
+
+        -> Find all branches and name of their managers
+
+                SELECT employee.emp_id, employee.first_name, branch.branch_name FROM employee JOIN branch ON employee.emp_id = branch.mgr_id;
+
+    -> Types of Joins
+
+        > Inner Join
+
+                An Inner Join combines rows from two tables whenever they have a shared column in common.
+
+        > Left Join
+
+                When we use a Left Join, we include all of the rows from the left table. 
+
+        > Right Join
+
+                When we use a Right Join, we include all the rows from the Right table.
+
+        > Full Outer Join   
+
+                It is a Combination of Left Join and Right Join
+
+--> Nested Queries
+
+    A Nested Query is basically a query in which we use multiple select statements to get a particular piece of information.
+
+        -> Find names of all employees who have sold over 30000 to a single client
+
+                SELECT employee.first_name, employee.last_name FROM employee WHERE employee.emp_id IN (SELECT works_with.emp_id FROM works_with WHERE works_with.total_sales > 30000);
+                
+        -> Find all clients who are handled by the branch that Michael Scott manages
+
+                SELECT client.client_name FROM client WHERE client.branch_id = (SELECT branch.branch_id FROM branch WHERE branch.mgr_id = 102);
+                
+--> On Delete
+
+    Deleting Entries from a Database when they have foregin keys associated with them. 
+
+        -> ON DELETE SET NULL  
+
+                It is bascially, if we delete one of the Employee, then the Manager ID associated with it will be set to Null.
+
+                DELETE FROM employee WHERE emp_id = 102;
+
+        -> ON DELETE CASCADE 
+
+                If we delete the Employee who ID is stored in the Manager ID column then we will delete the entire row in the database 
+
+                DELETE FROM branch WHERE branch_id = 2;
+
+--> Triggers  
+
+    A Trigger is bascially a block of SQL code you can write which will define a certain action that should happen when a certain operation is performed on the Database.
+
+    Eg:
+            CREATE TABLE trigger_test(
+                message VARCHAR(100)
+            );
+
+
+            Trigger Code:
+
+                DELIMITER $$
+                CREATE TRIGGER my_trigger BEFORE INSERT ON employee
+                    FOR EACH ROW BEGIN
+                        INSERT INTO trigger_test VALUES('added new employee');
+                    END$$
+                DELIMITER ;         
+
+                DELIMITER is a Keyword which acts as an Terminator for the Trigger Syntax.    
+
+                You can also use IF-ELSEIF-ELSE Conditions also in this. 
+
