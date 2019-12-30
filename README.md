@@ -2,6 +2,8 @@
 
 This is a Complete PHP Tutorial Programs. 
 
+*SQL Tutorail File is also added in the SQl Folder.*
+
 Most of the basic Topics are covered here. 
 
 PHP Download and Installation:
